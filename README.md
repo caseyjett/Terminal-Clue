@@ -1,4 +1,4 @@
-# python_project
+# Terminal Clue
 
 ## Things that I need to do to build Clue: 
 - Make lists for: 
@@ -21,3 +21,11 @@
 
 ## Variances from real Clue
 - No hallways or dice rolls
+
+
+#### Places I found info to do stuff: 
+- When I wasn't sure the best way to make a random selection from a list: [Stack Abuse] (https://stackabuse.com/how-to-randomly-select-elements-from-a-list-in-python)
+
+#### Clue Resources: 
+- [Official Game Rules] (https://www.hasbro.com/common/instruct/clueins.pdf)
+- A bunch of [Clue history] (https://www.sportsfeelgoodstories.com/clue-characters-rooms-rules/)
