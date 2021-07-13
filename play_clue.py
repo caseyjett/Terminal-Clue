@@ -30,6 +30,7 @@ rooms = [
     "Study"
 ]
 
+#THE MURDER
 the_murder = []
 def random_murder():
     murderer = random.choice(characters)
@@ -40,6 +41,12 @@ def random_murder():
     the_murder.append(murder_location)
     the_murder.append(murder_weapon)
 
+#DETERMINE NUMBER OF PLAYERS
+def determine_game_size():
+    number_of_players = int(input("How many players would you like to compete against? Pick a number between 2 and 5: "))
+    return number_of_players
+
+#BEGINNING OF CLASSES
 class Player: 
     def __init__(self, name, starting_room):
         self.name = name
@@ -66,7 +73,28 @@ class Player:
         play_in = rooms[chosen_room]
         print("You are now in the " + play_in + "\n") #I would really like to be able to use the characters name here instead of "You"
         self.current_room = current.connections[chosen_room]
-        
+
+    def guess(self):
+        print("\nGuess the killer:")
+        for idx, character in enumerate(characters):
+            print(f"---{idx}) {character}")
+        murderer_guess = int(input(" "))
+        for idx, weapon in enumerate(weapons):
+            print(f"---{idx}) {weapon}")
+        weapon_guess = int(input(" "))
+        # print("You are guessing that " + characters[murderer_guess] + " used the " + weapons[weapon_guess] + " in the " + self.current_room + " to kill Mr. Body.")
+        #Work the cards with these guesses somehow
+
+    def accusation(self):
+        warning = input("Warning: An accusation will end the game. Are you confident enough to proceed? Y/N")
+        if warning.upper() == 'Y':
+            #Print characters, weapons, and rooms
+            print("Enter the numbers corresponding with the murderer, weapon, and room")
+
+        else: 
+            #exit the accusation
+            pass
+
 
 class Room:
 
@@ -78,6 +106,7 @@ class Room:
         self.connections.append(room)
 
 
+#MAIN GAME PLAY
 def in_play():
     ballroom = Room("Ballroom")
     billiard_room = Room("Billiard Room")
@@ -128,10 +157,12 @@ def in_play():
 
 
     player = Player("player", billiard_room)
+    # player.pick_player()
 
-    player.pick_player()
+
+    #Eventually inside while True: 
     player.next_room()
-
+    player.guess()
 
     # while True:
     #     # This is the big loop. 
@@ -139,12 +170,31 @@ def in_play():
     #     # Help
     #     # Quit
     #     # Map, etc. 
+    #     # Win accusation()
+    #     See your clues
     #     pass
 
+#CALLING THE ACTION
 random_murder()
-# print(the_murder)
+
+#BUILDING CARD DECKS
+cards = []
+cards.extend(characters)
+cards.extend(weapons)
+cards.extend(rooms)
+
+cards.remove(the_murder[0])
+cards.remove(the_murder[1])
+cards.remove(the_murder[2])
+
+random.shuffle(cards)
+
+#SEE CARDS
+
+
 
 in_play()
+
 
 # print("""
 # X--------------------------------------------X

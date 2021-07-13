@@ -23,8 +23,11 @@
 - No hallways or dice rolls
 
 
+
+
 #### Places I found info to do stuff: 
 - When I wasn't sure the best way to make a random selection from a list: [Stack Abuse] (https://stackabuse.com/how-to-randomly-select-elements-from-a-list-in-python)
+- When I couldn't figure out how to divide the cards into a certain number subsets: [Stack Overflow] (https://stackoverflow.com/questions/2130016/splitting-a-list-into-n-parts-of-approximately-equal-length/37414115#37414115)
 
 #### Clue Resources: 
 - [Official Game Rules] (https://www.hasbro.com/common/instruct/clueins.pdf)
