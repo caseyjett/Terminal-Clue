@@ -48,9 +48,10 @@ def determine_game_size():
 
 #BEGINNING OF CLASSES
 class Player: 
-    def __init__(self, name, starting_room):
+    def __init__(self, name, starting_room, char):
         self.name = name
         self.current_room = starting_room
+        self.char = char
 
     def pick_player(self):
         print("\nWhich character would you like to play as? \n")
@@ -59,14 +60,14 @@ class Player:
         chosen_character = int(input("\nEnter a number: "))
         play_as = characters[chosen_character]
         print("You are now " + play_as + "\n")
-        return chosen_character #So that I can access chosen_character? 
+        self.char = characters[chosen_character] #So that I can access chosen_character? 
         # for character in characters:
         #     # find the chosen character and print it like "Okay Mr. Green welcome to the ... and explain rules of the game. Also remove player from the list of people that can be asked"
         #     pass
 
     def next_room(self):
         current = self.current_room
-        print("Which room would you like to go to next? ")
+        print("Which room would you like to go to next,", self.char,"?")
         for idx, room in enumerate(current.connections):
             print(f'---{idx}) {room.name}')
         chosen_room = int(input("\nEnter a number: "))
@@ -81,6 +82,7 @@ class Player:
         for idx, weapon in enumerate(weapons):
             print(f"---{idx}) {weapon}")
         weapon_guess = int(input(" "))
+        print("You are guessing that: ", characters[murderer_guess], "killed Mr. Body with the", weapons[weapon_guess], "in the", self.current_room.name, "\n")
         # print("You are guessing that " + characters[murderer_guess] + " used the " + weapons[weapon_guess] + " in the " + self.current_room + " to kill Mr. Body.")
         #Work the cards with these guesses somehow
 
@@ -155,24 +157,47 @@ def in_play():
     study.add_adjacent_room(kitchen)
 
 
-    player = Player("player", billiard_room)
-    # player.pick_player()
+    # Start of Game
+    player = Player("player", billiard_room, "Player")
+    player.pick_player()
 
 
     #Eventually inside while True: 
-    while True:
-        player.next_room()
-        # player.guess()
+    # player.next_room()
+    # player.guess()
 
-    # while True:
-    #     # This is the big loop. 
-    #     # Game
-    #     # Help
-    #     # Quit
-    #     # Map, etc. 
-    #     # Win accusation()
-    #     See your clues
-    #     pass
+
+    while True:
+        print(player.char, ", what would you like to do? Type:")
+        print("---'G' to make a guess, \n---'S' to switch rooms, \n---'M' to see the map, \n---'A' to make the final accusation, \n---'Q' to Quit.")
+        choice = input(" ").upper()
+        if choice == "G":
+            player.guess()
+        elif choice == "S":
+            player.next_room()
+        elif choice == "M":
+            print("""
+                    X--------------------------------------------X
+                    |              |              |              |
+                    |    Study     |    Hall      |   Lounge     |
+                    |              |              |              |
+                    |--------------------------------------------|
+                    |              |              |              |
+                    |              |              |              |
+                    |   Library    |   Billiard   |    Dining    |
+                    |              |     Room     |     Hall     |
+                    |              |              |              |  
+                    |--------------------------------------------|
+                    |              |              |              |
+                    | Conservatory |   Ballroom   |    Kitchen   |
+                    |              |              |              |
+                    X--------------------------------------------X
+                    """)
+        elif choice == "A":
+            player.accusation
+        elif choice == "Q":
+            break
+        #Notes to see which cards they've seen for game
 
 #CALLING THE ACTION
 random_murder()
@@ -196,23 +221,7 @@ random.shuffle(cards)
 in_play()
 
 
-# print("""
-# X--------------------------------------------X
-# |              |              |              |
-# |    Study     |    Hall      |   Lounge     |
-# |              |              |              |
-# |--------------------------------------------|
-# |              |              |              |
-# |              |              |              |
-# |   Library    |   Billiard   |    Dining    |
-# |              |     Room     |     Hall     |
-# |              |              |              |  
-# |--------------------------------------------|
-# |              |              |              |
-# | Conservatory |   Ballroom   |    Kitchen   |
-# |              |              |              |
-# X--------------------------------------------X
-# """)
+
 
 # This is just messing around with my options when I get here... 
 # def guessing():
