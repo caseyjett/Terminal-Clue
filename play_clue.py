@@ -13,7 +13,7 @@ weapons = [
     "Knife", 
     "Revolver", 
     "Rope", 
-    "Wrench"
+    "Wrench",
     "Candlestick", 
     "Lead pipe"
 ]
@@ -68,7 +68,7 @@ class Player:
         current = self.current_room
         print("Which room would you like to go to next? ")
         for idx, room in enumerate(current.connections):
-            print(f'---{idx}) {room}')
+            print(f'---{idx}) {room.name}')
         chosen_room = int(input("\nEnter a number: "))
         play_in = rooms[chosen_room]
         print("You are now in the " + play_in + "\n") #I would really like to be able to use the characters name here instead of "You"
@@ -162,7 +162,7 @@ def in_play():
 
     #Eventually inside while True: 
     player.next_room()
-    player.guess()
+    # player.guess()
 
     # while True:
     #     # This is the big loop. 

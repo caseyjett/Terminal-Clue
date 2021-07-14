@@ -1,5 +1,5 @@
 import random
-import math
+import pandas
 
 characters = [
     "Mrs. White", 
@@ -59,19 +59,29 @@ random.shuffle(cards)
 #This game size DOES NOT account for the player, only the number of other players
 game_size = determine_game_size()
 
-def split(a, n):
-    k, m = divmod(len(a), n)
-    return (a[i*k+min(i, m):(i+1)*k+min(i+1, m)] for i in range(n))
 
-smaller_deck = list(split(cards, game_size + 1))
-player_deck = list(smaller_deck[0])
+# TRYING TO FIGURE OUT HOW TO USE PANDAS FOR THE CARDS. 
+my_dataframe = pandas.DateFrame()
+for i in range(game_size + 1):
+    list = []
+    my_dataframe.append(list)
 
-print("\nYou're clues are:", player_deck, "\n")
+for row, column in my_dataframe:
+    for card in cards:
+        my_dataframe(row, column) = cards[card]
 
-other_player_numbers =[]
-other_players = range(game_size)
-for n in other_players:
-    text = "Player {}".format(n + 1)
-    other_player_numbers.append(text)
+
+
+
     
-print(other_player_numbers)
+# THIS WILL DIVIDE THE CARDS LIST INTO SUBLISTS 
+# def split(a, n):
+#     k, m = divmod(len(a), n)
+#     return (a[i*k+min(i, m):(i+1)*k+min(i+1, m)] for i in range(n))
+
+# smaller_deck = list(split(cards, game_size + 1))
+# player_deck = list(smaller_deck[0])
+
+# print("\nYou're clues are:", player_deck, "\n")
+
+
