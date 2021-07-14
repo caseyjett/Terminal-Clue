@@ -60,9 +60,8 @@ class Player:
         chosen_character = int(input("\nEnter a number: "))
         play_as = characters[chosen_character]
         print("You are now " + play_as + "\n")
-        self.char = characters[chosen_character] #So that I can access chosen_character? 
-        # for character in characters:
-        #     # find the chosen character and print it like "Okay Mr. Green welcome to the ... and explain rules of the game. Also remove player from the list of people that can be asked"
+        self.char = characters[chosen_character] 
+        # find the chosen character and print it like "Okay Mr. Green welcome to the ... and explain rules of the game. Also remove player from the list of people that can be asked"
         #     pass
 
     def next_room(self):
@@ -72,7 +71,7 @@ class Player:
             print(f'---{idx}) {room.name}')
         chosen_room = int(input("\nEnter a number: "))
         self.current_room = current.connections[chosen_room]
-        print("You are now in the ", self.current_room.name,"\n") #I would really like to be able to use the characters name here instead of "You"
+        print("You are now in the ", self.current_room.name,"\n") 
 
     def guess(self):
         print("\nGuess the killer:")
@@ -83,17 +82,36 @@ class Player:
             print(f"---{idx}) {weapon}")
         weapon_guess = int(input(" "))
         print("You are guessing that: ", characters[murderer_guess], "killed Mr. Body with the", weapons[weapon_guess], "in the", self.current_room.name, "\n")
-        # print("You are guessing that " + characters[murderer_guess] + " used the " + weapons[weapon_guess] + " in the " + self.current_room + " to kill Mr. Body.")
         #Work the cards with these guesses somehow
 
     def accusation(self):
-        warning = input("Warning: An accusation will end the game. Are you confident enough to proceed? Y/N")
+        warning = input("Warning: An accusation will end the game. Are you confident enough to proceed? Y/N  ")
         if warning.upper() == 'Y':
+            print("\n")
+            for idx, character in enumerate(characters):
+                print(f"---{idx}) {character}")
+            murderer_accusation = int(input("Enter the number corresponding with the murderer: "))
+            for idx, weapon in enumerate(weapons):
+                print(f"---{idx}) {weapon}")
+            weapon_accusation = int(input("Enter the number corresponding with the murder weapon: "))
+            for idx, room in enumerate(rooms):
+                print(f"---{idx}) {room}")
+            room_accusation = int(input("Enter the number corresponding with the room where the murder took place: "))
             #Print characters, weapons, and rooms
-            print("Enter the numbers corresponding with the murderer, weapon, and room")
+            print("--You believe that ", characters[murderer_accusation], " used the ", weapons[weapon_accusation], " in the ", rooms[room_accusation],"!!--")
+            final_accusation = input("Is this your final accusation? Y/N  ").upper()
+            if final_accusation == "Y":
+                #Logic to match murder with accusation
+                pass
+            elif final_accusation == "N":
+                self.accusation()
+            else:
+                print("That was not a valid response. Try again\n")
+                self.accusation()
+            
 
         else: 
-            #exit the accusation
+            #Exit the accusation
             pass
 
 
@@ -162,6 +180,7 @@ def in_play():
     player.pick_player()
 
 
+
     #Eventually inside while True: 
     # player.next_room()
     # player.guess()
@@ -194,10 +213,14 @@ def in_play():
                     X--------------------------------------------X
                     """)
         elif choice == "A":
-            player.accusation
+            player.accusation()
         elif choice == "Q":
             break
-        #Notes to see which cards they've seen for game
+        else:
+            continue
+
+        # !!!!
+        # Need an elif for Notes to see which cards they've seen for game
 
 #CALLING THE ACTION
 random_murder()
