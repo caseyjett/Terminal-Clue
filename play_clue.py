@@ -19,12 +19,12 @@ weapons = [
 ]
 
 rooms = [
+    "Ballroom", 
     "Billiard Room", 
     "Conservatory", 
     "Dining Hall", 
     "Kitchen", 
     "Hall", 
-    "Ballroom", 
     "Lounge", 
     "Library", 
     "Study"
@@ -70,9 +70,8 @@ class Player:
         for idx, room in enumerate(current.connections):
             print(f'---{idx}) {room.name}')
         chosen_room = int(input("\nEnter a number: "))
-        play_in = rooms[chosen_room]
-        print("You are now in the " + play_in + "\n") #I would really like to be able to use the characters name here instead of "You"
         self.current_room = current.connections[chosen_room]
+        print("You are now in the ", self.current_room.name,"\n") #I would really like to be able to use the characters name here instead of "You"
 
     def guess(self):
         print("\nGuess the killer:")
@@ -116,7 +115,7 @@ def in_play():
     hall = Room("Hall")
     lounge = Room("Lounge")
     library = Room("Library")
-    study = Room("study")
+    study = Room("Study")
 
     ballroom.add_adjacent_room(conservatory)
     ballroom.add_adjacent_room(billiard_room)
@@ -161,8 +160,9 @@ def in_play():
 
 
     #Eventually inside while True: 
-    player.next_room()
-    # player.guess()
+    while True:
+        player.next_room()
+        # player.guess()
 
     # while True:
     #     # This is the big loop. 
