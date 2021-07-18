@@ -77,6 +77,22 @@ seen_clues = []
 for i in player_cards:
     seen_clues.append(i)
 
+character_clues = []
+for j in player_cards:
+    if j in characters:
+        character_clues.append(j)
+
+weapon_clues = []
+for k in player_cards:
+    if k in weapons:
+        weapon_clues.append(k)
+
+room_clues = []
+for l in player_cards:
+    if l in rooms:
+        room_clues.append(l)
+
+
 #BEGINNING OF CLASSES
 class Player: 
     def __init__(self, name, starting_room, char):
@@ -85,7 +101,7 @@ class Player:
         self.char = char
 
     def pick_player(self):
-        print("\nWhich character would you like to play as? \n")
+        print("\nWelcome to the Tudor Mansion. Which character would you like to play as? \n")
         for idx, character in enumerate(characters):
             print(f"---{idx}) {character}")
         chosen_character = int(input("\nEnter a number: "))
@@ -114,21 +130,38 @@ class Player:
             print(f"---{idx}) {weapon}")
         weapon_guess = int(input(" "))
         print(f"You are guessing that: {characters[murderer_guess]} killed Mr. Body with the {weapons[weapon_guess]} in the {self.current_room.name}.\n")
-        #Work the cards with these guesses somehow
         guess = 0
         for i in range(len(computer_1)):
             if computer_1[i] == characters[murderer_guess] or computer_1[i] == weapons[weapon_guess] or computer_1[i] == self.current_room.name:
                 # Need a way to only show one card not all of them
                 print(f"Detective Gordon knows that it's not: {computer_1[i]} \n")
                 seen_clues.append(f'{computer_1[i]} from Detective Gordon')
+                if computer_1[i] in characters:
+                    character_clues.append(computer_1[i])
+                elif computer_1[i] in weapons:
+                    weapon_clues.append(computer_1[i])
+                elif computer_1[i] in rooms:
+                    room_clues.append(computer_1[i])
+                    
                 guess += 1
+                break
         if guess < 1: 
             for i in range(len(computer_1)):
                 if computer_2[i] == characters[murderer_guess] or computer_2[i] == weapons[weapon_guess] or computer_2[i] == self.current_room.name:
                     # Need a way to only show one card not all of them
                     print(f"Sherlock knows that it's not: {computer_2[i]} \n")
-                else:
-                    print("Detective Gordon and Sherlock don't have any clues to share.")
+                    seen_clues.append(f'{computer_2[i]} from Sherlock')
+                    if computer_2[i] in characters:
+                        character_clues.append(computer_2[i])
+                    elif computer_2[i] in weapons:
+                        weapon_clues.append(computer_2[i])
+                    elif computer_2[i] in rooms:
+                        room_clues.append(computer_2[i])
+                    guess += 1
+                    break
+
+        if guess == 0: 
+            print("Detective Gordon and Sherlock don't have any clues to share.\n")
     
             
 
@@ -164,7 +197,6 @@ class Player:
         else: 
             #Exit the accusation
             pass
-
 
 class Room:
 
@@ -233,14 +265,15 @@ def in_play():
 
     while True:
         print(player.char, ", what would you like to do? Type:")
-        print("---'G' to make a guess \n---'S' to switch rooms \n---'M' to see the map \n---'C' to see your clues \n---'A' to make the final accusation \n---'Q' to Quit.")
+        print("---'G' to make a guess \n---'S' to switch rooms \n---'M' to see the map \n---'C' to see your clues \n---'P' to see possible murder details\n---'A' to make the final accusation \n---'Q' to Quit.")
         choice = input(" ").upper()
         if choice == "G":
             player.guess()
         elif choice == "S":
             player.next_room()
         elif choice == "M":
-            print("""
+            print(f"""
+            You are currently in the {player.current_room.name}
                     X--------------------------------------------X
                     |              |              |              |
                     |    Study     |    Hall      |   Lounge     |
@@ -258,7 +291,9 @@ def in_play():
                     X--------------------------------------------X
                     """)
         elif choice == 'C':
-            print(f'\nHere are the clues you have seen so far {seen_clues} \n')
+            print(f'\nHere are the clues you have seen so far: \n-- Charactars: {character_clues}\n-- Weapons: {weapon_clues}\n-- Rooms: {room_clues}\n')
+        elif choice == "P":
+            print(f"Here are all of the possibilities: \n--Characters: {characters} \n--Weapons: {weapons} \n--Rooms: {rooms}\n")
         elif choice == "A":
             player.accusation()
             break
@@ -266,7 +301,7 @@ def in_play():
             break
         else:
             continue
-    
+
 
 
 

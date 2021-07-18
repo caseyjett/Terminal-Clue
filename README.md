@@ -13,7 +13,7 @@
 - Show Clues :white_check_mark:
 
 ### How to play: 
-- Run 'python play_clue.py' The game will give you all instructions on what to do
+- Run `python play_clue.py` The game will give you all instructions on what to do
 
 ### Variances from real Clue
 - No hallways or dice rolls
