@@ -258,12 +258,30 @@ def in_play():
 
 
     while True:
-        print(player.char, ", what would you like to do? Type:")
+        print(f"{player.char}, what would you like to do? Type:")
         print("---'G' to make a guess \n---'S' to switch rooms \n---'M' to see the map \n---'C' to see your clues \n---'P' to see possible murder details\n---'A' to make the final accusation \n---'Q' to Quit.")
         choice = input(" ").upper()
         if choice == "G":
             player.guess()
         elif choice == "S":
+            print(f"""
+            You are currently in the {player.current_room.name}
+                    X--------------------------------------------X
+                    |              |              |              |
+                    |    Study     |    Hall      |   Lounge     |
+                    |              |              |              |
+                    |--------------------------------------------|
+                    |              |              |              |
+                    |              |              |              |
+                    |   Library    |   Billiard   |    Dining    |
+                    |              |     Room     |     Hall     |
+                    |              |              |              |  
+                    |--------------------------------------------|
+                    |              |              |              |
+                    | Conservatory |   Ballroom   |    Kitchen   |
+                    |              |              |              |
+                    X--------------------------------------------X
+                    """)
             player.next_room()
         elif choice == "M":
             print(f"""
@@ -287,7 +305,7 @@ def in_play():
         elif choice == 'C':
             print(f'\nHere are the clues you have seen so far: \n-- Charactars: {character_clues}\n-- Weapons: {weapon_clues}\n-- Rooms: {room_clues}\n')
         elif choice == "P":
-            print(f"Here are all of the possibilities: \n--Characters: {characters} \n--Weapons: {weapons} \n--Rooms: {rooms}\n")
+            print(f"Here are all of the possibilities: \n-- Characters: {characters} \n-- Weapons: {weapons} \n-- Rooms: {rooms}\n")
         elif choice == "A":
             player.accusation()
             break
