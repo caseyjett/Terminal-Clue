@@ -73,24 +73,20 @@ computer_1 = smaller_deck[1]
 computer_2 = smaller_deck[2]
 
 # These will be the clues that the player has seen
-seen_clues = []
+original_clues = []
 for i in player_cards:
-    seen_clues.append(i)
+    original_clues.append(i)
 
 character_clues = []
+weapon_clues = []
+room_clues = []
 for j in player_cards:
     if j in characters:
         character_clues.append(j)
-
-weapon_clues = []
-for k in player_cards:
-    if k in weapons:
-        weapon_clues.append(k)
-
-room_clues = []
-for l in player_cards:
-    if l in rooms:
-        room_clues.append(l)
+    elif j in weapons:
+        weapon_clues.append(j) 
+    elif j in rooms:
+        room_clues.append(j)        
 
 
 #BEGINNING OF CLASSES
@@ -135,13 +131,12 @@ class Player:
             if computer_1[i] == characters[murderer_guess] or computer_1[i] == weapons[weapon_guess] or computer_1[i] == self.current_room.name:
                 # Need a way to only show one card not all of them
                 print(f"Detective Gordon knows that it's not: {computer_1[i]} \n")
-                seen_clues.append(f'{computer_1[i]} from Detective Gordon')
                 if computer_1[i] in characters:
-                    character_clues.append(computer_1[i])
+                    character_clues.append(f'{computer_1[i]} from Detective Gordon')
                 elif computer_1[i] in weapons:
-                    weapon_clues.append(computer_1[i])
+                    weapon_clues.append(f'{computer_1[i]} from Detective Gordon')
                 elif computer_1[i] in rooms:
-                    room_clues.append(computer_1[i])
+                    room_clues.append(f'{computer_1[i]} from Detective Gordon')
                     
                 guess += 1
                 break
@@ -150,13 +145,12 @@ class Player:
                 if computer_2[i] == characters[murderer_guess] or computer_2[i] == weapons[weapon_guess] or computer_2[i] == self.current_room.name:
                     # Need a way to only show one card not all of them
                     print(f"Sherlock knows that it's not: {computer_2[i]} \n")
-                    seen_clues.append(f'{computer_2[i]} from Sherlock')
                     if computer_2[i] in characters:
-                        character_clues.append(computer_2[i])
+                        character_clues.append(f'{computer_2[i]} from Sherlock')
                     elif computer_2[i] in weapons:
-                        weapon_clues.append(computer_2[i])
+                        weapon_clues.append(f'{computer_2[i]} from Sherlock')
                     elif computer_2[i] in rooms:
-                        room_clues.append(computer_2[i])
+                        room_clues.append(f'{computer_2[i]} from Sherlock')
                     guess += 1
                     break
 
