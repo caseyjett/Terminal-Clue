@@ -26,6 +26,7 @@
 
 ### Things still to do:
 - Allow the user to determine how many computer players there are instead of automatically having two computer players. 
+- Add error-handling for when players enter characters other than the accepted integers when picking players, switching rooms, guessing, or making an accusation. 
 
 
 ### Places I found info to do stuff: 
