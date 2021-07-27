@@ -101,10 +101,14 @@ class Player:
         for idx, character in enumerate(characters):
             print(f"---{idx}) {character}")
         chosen_character = int(input("\nEnter a number: "))
-        play_as = characters[chosen_character]
-        print(f"You are now {play_as} \n")
-        self.char = characters[chosen_character] 
-        print(f"\n**{self.char}, today there has been a murder at the Tudor Mansion and it is your job to solve it. You, Detective Gordon, and Sherlock each have six clues. Those clues tell you people that are NOT the murderer, rooms that are NOT the murder location, and items that are NOT the murder weapon. You will navigate room to room guessing what may have happened in that room. When you guess, Detective Gordon or Sherlock will share their clues if they have any. Once you have determined the murder details, you will make an accusation. You only get one chance to make an accusation so make sure that you are positive! You begin in the Billiard Room and can only move into rooms that are north, south, east or west. Rooms at the 4 corners of the mansion have secret tunnels connecting them to the room diagonal from them. You can check out the map anytime you want to. \n\nHere are your clues: {player_cards}\n")
+        if chosen_character > 5:
+            print("Invalid Input: You need to choose a character.")
+            self.pick_player()
+        else:
+            play_as = characters[chosen_character]
+            print(f"You are now {play_as} \n")
+            self.char = characters[chosen_character] 
+            print(f"\n**{self.char}, today there has been a murder at the Tudor Mansion and it is your job to solve it. You, Detective Gordon, and Sherlock each have six clues. Those clues tell you people that are NOT the murderer, rooms that are NOT the murder location, and items that are NOT the murder weapon. You will navigate room to room guessing what may have happened in that room. When you guess, Detective Gordon or Sherlock will share their clues if they have any. Once you have determined the murder details, you will make an accusation. You only get one chance to make an accusation so make sure that you are positive! You begin in the Billiard Room and can only move into rooms that are north, south, east or west. Rooms at the 4 corners of the mansion have secret tunnels connecting them to the room diagonal from them. You can check out the map anytime you want to. \n\nHere are your clues: {player_cards}\n")
 
 
     def next_room(self):
@@ -113,8 +117,12 @@ class Player:
         for idx, room in enumerate(current.connections):
             print(f'---{idx}) {room.name}')
         chosen_room = int(input("\nEnter a number: "))
-        self.current_room = current.connections[chosen_room]
-        print(f"You are now in the {self.current_room.name}.\n") 
+        if chosen_room > len(current.connections)-1:
+            print("Invalid Input: You need to choose room.")
+            self.next_room()
+        else: 
+            self.current_room = current.connections[chosen_room]
+            print(f"You are now in the {self.current_room.name}.\n") 
 
     def guess(self):
         print("\nGuess the killer:")
@@ -125,37 +133,41 @@ class Player:
         for idx, weapon in enumerate(weapons):
             print(f"---{idx}) {weapon}")
         weapon_guess = int(input(" "))
-        print(f"You are guessing that: {characters[murderer_guess]} killed Mr. Body with the {weapons[weapon_guess]} in the {self.current_room.name}.\n")
-        guess = 0
-        for i in range(len(computer_1)):
-            if computer_1[i] == characters[murderer_guess] or computer_1[i] == weapons[weapon_guess] or computer_1[i] == self.current_room.name:
-                # Need a way to only show one card not all of them
-                print(f"Detective Gordon knows that it's not: {computer_1[i]} \n")
-                if computer_1[i] in characters:
-                    character_clues.append(f'{computer_1[i]} from Detective Gordon')
-                elif computer_1[i] in weapons:
-                    weapon_clues.append(f'{computer_1[i]} from Detective Gordon')
-                elif computer_1[i] in rooms:
-                    room_clues.append(f'{computer_1[i]} from Detective Gordon')
-                    
-                guess += 1
-                break
-        if guess < 1: 
+        if murderer_guess > 5 or weapon_guess > 5:
+            print("One or more of your guesses was not valid. Please try again")
+            self.guess()
+        else:
+            print(f"You are guessing that: {characters[murderer_guess]} killed Mr. Body with the {weapons[weapon_guess]} in the {self.current_room.name}.\n")
+            guess = 0
             for i in range(len(computer_1)):
-                if computer_2[i] == characters[murderer_guess] or computer_2[i] == weapons[weapon_guess] or computer_2[i] == self.current_room.name:
+                if computer_1[i] == characters[murderer_guess] or computer_1[i] == weapons[weapon_guess] or computer_1[i] == self.current_room.name:
                     # Need a way to only show one card not all of them
-                    print(f"Sherlock knows that it's not: {computer_2[i]} \n")
-                    if computer_2[i] in characters:
-                        character_clues.append(f'{computer_2[i]} from Sherlock')
-                    elif computer_2[i] in weapons:
-                        weapon_clues.append(f'{computer_2[i]} from Sherlock')
-                    elif computer_2[i] in rooms:
-                        room_clues.append(f'{computer_2[i]} from Sherlock')
+                    print(f"Detective Gordon knows that it's not: {computer_1[i]} \n")
+                    if computer_1[i] in characters:
+                        character_clues.append(f'{computer_1[i]} from Detective Gordon')
+                    elif computer_1[i] in weapons:
+                        weapon_clues.append(f'{computer_1[i]} from Detective Gordon')
+                    elif computer_1[i] in rooms:
+                        room_clues.append(f'{computer_1[i]} from Detective Gordon')
+                        
                     guess += 1
                     break
+            if guess < 1: 
+                for i in range(len(computer_1)):
+                    if computer_2[i] == characters[murderer_guess] or computer_2[i] == weapons[weapon_guess] or computer_2[i] == self.current_room.name:
+                        # Need a way to only show one card not all of them
+                        print(f"Sherlock knows that it's not: {computer_2[i]} \n")
+                        if computer_2[i] in characters:
+                            character_clues.append(f'{computer_2[i]} from Sherlock')
+                        elif computer_2[i] in weapons:
+                            weapon_clues.append(f'{computer_2[i]} from Sherlock')
+                        elif computer_2[i] in rooms:
+                            room_clues.append(f'{computer_2[i]} from Sherlock')
+                        guess += 1
+                        break
 
-        if guess == 0: 
-            print("Detective Gordon and Sherlock don't have any clues to share.\n")
+            if guess == 0: 
+                print("Detective Gordon and Sherlock don't have any clues to share.\n")
     
             
 
@@ -175,19 +187,23 @@ class Player:
                 print(f"---{idx}) {room}")
             room_accusation = int(input("Enter the number corresponding with the room where the murder took place: "))
             print("\n")
-            #Print characters, weapons, and rooms
-            print(f"--You believe that {characters[murderer_accusation]} used the {weapons[weapon_accusation]} in the {rooms[room_accusation]}!!--")
-            final_accusation = input("Is this your final accusation? Y/N  ").upper()
-            if final_accusation == "Y":
-                if the_murder[0] == characters[murderer_accusation] and the_murder[1] == rooms[room_accusation] and the_murder[2] == weapons[weapon_accusation]:
-                    print(f"\nCongratulation {self.char} you have solved Mr. Body's murder!!!\n\n")
-                else:
-                    print(f"\nToday you failed Mr. Body. Here is what actaully happened: {the_murder[0]} killed Mr. Body in the {the_murder[1]} with the {the_murder[2]}.\n\n")
-            elif final_accusation == "N":
+            if murderer_accusation > 5 or weapon_accusation > 5 or room_accusation > 8:
+                print("One or more of your accusations was not valid. Please try again.")
                 self.accusation()
             else:
-                print("That was not a valid response. Try again\n")
-                self.accusation()
+                #Print characters, weapons, and rooms
+                print(f"--You believe that {characters[murderer_accusation]} used the {weapons[weapon_accusation]} in the {rooms[room_accusation]}!!--")
+                final_accusation = input("Is this your final accusation? Y/N  ").upper()
+                if final_accusation == "Y":
+                    if the_murder[0] == characters[murderer_accusation] and the_murder[1] == rooms[room_accusation] and the_murder[2] == weapons[weapon_accusation]:
+                        print(f"\nCongratulation {self.char} you have solved Mr. Body's murder!!!\n\n")
+                    else:
+                        print(f"\nToday you failed Mr. Body. Here is what actaully happened: {the_murder[0]} killed Mr. Body in the {the_murder[1]} with the {the_murder[2]}.\n\n")
+                elif final_accusation == "N":
+                    self.accusation()
+                else:
+                    print("That was not a valid response. Try again\n")
+                    self.accusation()
         else: 
             #Exit the accusation
             pass
