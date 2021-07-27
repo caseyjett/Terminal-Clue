@@ -24,6 +24,10 @@
 - Create a dictionary or list, populate it with several values, retrieve at least one value, and use it in your program
 - Create and call at least 3 functions or methods, at least one of which must return a value that is used somewhere else in your code.
 
+### Things still to do:
+- Allow the user to determine how many computer players there are instead of automatically having two computer players. 
+- Add error-handling for when players enter numbers in their player-picking, guess, or accusation that are greater than the options. 
+
 
 ### Places I found info to do stuff: 
 - When I wasn't sure the best way to make a random selection from a list: [Stack Abuse](https://stackabuse.com/how-to-randomly-select-elements-from-a-list-in-python)
